@@ -1,0 +1,27 @@
+{
+  "name": "flight-transpiler",
+  "version": "1.0.0",
+  "description": "Flight to JS transpiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomDobbelaere/Flight.git"
+  },
+  "keywords": [
+    "flight",
+    "programming",
+    "language"
+  ],
+  "author": "Tom Dobbelaere",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TomDobbelaere/Flight/issues"
+  },
+  "homepage": "https://github.com/TomDobbelaere/Flight#readme",
+  "dependencies": {
+    "antlr4": "^4.7.1"
+  }
+}
