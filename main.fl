@@ -1,0 +1,13 @@
+func _fib(n, a, b) {
+    if (n == 0) {
+        return b;
+    } else {
+        return _fib(n - 1, a + b, a);
+    }
+}
+
+func fib(n) {
+    return _fib(n, 1, 0);
+}
+
+print(fib(1000));

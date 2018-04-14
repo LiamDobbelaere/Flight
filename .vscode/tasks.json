@@ -8,6 +8,12 @@
       "type": "shell",
       "command": "antlr4 -o flight-gen -Dlanguage=JavaScript Flight.g4",
       "problemMatcher": []
+    },
+    {
+      "label": "flight-main",
+      "type": "shell",
+      "command": "node index.js; node main.fl.js",
+      "problemMatcher": []
     }
   ]
 }
