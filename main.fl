@@ -10,4 +10,21 @@ func fib(n) {
     return _fib(n, 1, 0);
 }
 
+func toby(n) {
+    return n + 1;
+}
+
+let x = 5 + 8;
+let mut y = 8;
+let z = {
+    hi: {
+        boy: "kek"
+    },
+    world: "yo",
+    kek: toby
+};
+
+print(z.kek(8));
+print(x);
 print(fib(1000));
+print(toby(8));

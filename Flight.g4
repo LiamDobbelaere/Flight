@@ -74,11 +74,42 @@ functionDeclaration
 
 singleExpression
     : literal                                                                # LiteralExpression
+    | objectLiteral                                                          # ObjectLiteralExpression
     | Identifier                                                             # IdentifierExpression
+    | singleExpression memberDot identifierName                                    # MemberDotExpression
     | singleExpression arguments                                             # ArgumentsExpression
     | singleExpression (add | sub) singleExpression                          # AdditiveExpression
     | singleExpression (less | greater | lessOrEql | greaterOrEql) singleExpression            # RelationalExpression
     | singleExpression (equal | '!=' | '===' | '!==') singleExpression        # EqualityExpression
+    | singleExpression assign singleExpression                                  # AssignmentExpression
+    ;
+
+assign
+    : Assign
+    ;
+
+memberDot
+    : MemberDot
+    ;
+
+identifierName
+    : Identifier
+    ;
+
+objectLiteral
+    : '{' (propertyAssignment (propertySeparator propertyAssignment)*)? ','? '}'
+    ;
+
+propertySeparator: ParameterSeparator;
+
+propertyAssignment
+    : propertyName propertyAssignSymbol singleExpression       # PropertyExpressionAssignment
+    ;
+
+propertyAssignSymbol: PropertyAssignSymbol;
+
+propertyName
+    : Identifier
     ;
 
 equal: Equal;
@@ -137,14 +168,15 @@ ParameterListOpen: '(';
 ParameterListClose: ')';
 
 Assign: '=';
+MemberDot: '.';
 
 Identifier
     : [a-zA-Z_]+
     ;
 
 ParameterSeparator: ',';
-
 Terminator: ';';
+PropertyAssignSymbol: ':';
 
 Boolean: 'true';
 

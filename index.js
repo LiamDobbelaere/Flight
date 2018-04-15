@@ -12,7 +12,7 @@ var parser = new FlightParser.FlightParser(tokens);
 parser.buildParseTrees = true;
 var tree = parser.source();
 
-var treeListener = new FlightLangListener(true);
+var treeListener = new FlightLangListener(false);
 antlr4.tree.ParseTreeWalker.DEFAULT.walk(treeListener, tree);
 
 fs.writeFileSync('main.fl.js', treeListener.res);
