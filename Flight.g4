@@ -103,8 +103,10 @@ objectLiteral
 propertySeparator: ParameterSeparator;
 
 propertyAssignment
-    : propertyName propertyAssignSymbol singleExpression       # PropertyExpressionAssignment
+    : freezeMarker? propertyName propertyAssignSymbol singleExpression       # PropertyExpressionAssignment
     ;
+
+freezeMarker: FreezeMarker;
 
 propertyAssignSymbol: PropertyAssignSymbol;
 
@@ -167,6 +169,7 @@ BlockClose: '}';
 ParameterListOpen: '(';
 ParameterListClose: ')';
 
+FreezeMarker: '!';
 Assign: '=';
 MemberDot: '.';
 
@@ -195,3 +198,6 @@ fragment Digit
 Whitespace
     : [ \t\r\n]+ -> skip
     ;
+
+MultiLineComment:               '/*' .*? '*/'             -> skip;
+SingleLineComment:              '//' ~[\r\n\u2028\u2029]* -> skip;

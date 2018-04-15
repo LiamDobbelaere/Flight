@@ -16,7 +16,8 @@ func toby(n) {
 
 let x = 5 + 8;
 let mut y = 8;
-let z = {
+
+let immutableObject = {
     hi: {
         boy: "kek"
     },
@@ -24,7 +25,25 @@ let z = {
     kek: toby
 };
 
-print(z.kek(8));
+let mut mutableObject = {
+    hi: {
+        boy: "kek"
+    },
+    !world: {
+        !shoeSize: 5
+    },
+    kek: toby
+};
+
+//Some comment
+
+mutableObject.hi = 5;
+print(mutableObject.hi);
+
+mutableObject.world.shoeSize = 88;
+print(mutableObject.world);
+
+print(immutableObject.kek(8));
 print(x);
 print(fib(1000));
 print(toby(8));

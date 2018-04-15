@@ -22,14 +22,27 @@ return n + 1;
 
 const x = 5 + 8;
 let y = 8;
-const z = Object.freeze({
+const immutableObject = Object.freeze({
 hi: Object.freeze({
 boy: "kek"
 }),
 world: "yo",
 kek: toby
 });
-console.log(z.kek(8));
+let mutableObject = {
+hi: {
+boy: "kek"
+},
+world: {
+shoeSize: 5
+},
+kek: toby
+};
+Object.defineProperty(mutableObject, 'world', { configurable: false, writable: false });
+Object.defineProperty(mutableObject, 'shoeSize', { configurable: false, writable: false });
+mutableObject.world.shoeSize = 88;
+console.log(mutableObject.world);
+console.log(immutableObject.kek(8));
 console.log(x);
 console.log(fib(1000));
 console.log(toby(8));

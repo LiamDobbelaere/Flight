@@ -80,6 +80,8 @@ FlightListener.prototype.exitReturnStatement = function(ctx) {
 
 // Enter a parse tree produced by FlightParser#variableStatement.
 FlightListener.prototype.enterVariableStatement = function(ctx) {
+  ctx.frozen = [];
+
   if (ctx.varMutability()) {
     this.res.push('let ');
   } else {
@@ -90,6 +92,15 @@ FlightListener.prototype.enterVariableStatement = function(ctx) {
 // Exit a parse tree produced by FlightParser#variableStatement.
 FlightListener.prototype.exitVariableStatement = function(ctx) {
   this.res.push(this.terminator);
+
+  let self = this;
+
+  ctx.frozen.forEach(function(prop) {
+    let objName = ctx.variableDeclaration().Identifier();
+
+    self.res.push('Object.defineProperty(' + objName + ', \'' + 
+      prop + '\', { configurable: false, writable: false })' + self.terminator);
+  });
 };
 
 
@@ -131,6 +142,17 @@ FlightListener.prototype.enterIfStatement = function(ctx) {
 // Exit a parse tree produced by FlightParser#ifStatement.
 FlightListener.prototype.exitIfStatement = function(ctx) {
 
+};
+
+
+// Enter a parse tree produced by FlightParser#freezeMarker.
+FlightListener.prototype.enterFreezeMarker = function(ctx) {
+  let vsCtx = this.utils.findTypeInParents(ctx, FlightParser.VariableStatementContext);
+  let propCtx = this.utils.findTypeInParents(ctx, FlightParser.PropertyAssignmentContext);
+
+  if (vsCtx) {
+    vsCtx.frozen.push(propCtx.propertyName().Identifier().getText());
+  }
 };
 
 // Enter a parse tree produced by FlightParser#ifConditionList.
