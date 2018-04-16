@@ -1,0 +1,26 @@
+{
+    "name": "flightlanguage",
+    "displayName": "FlightLanguage",
+    "description": "Flight programming language highlighting.",
+    "version": "0.0.1",
+    "publisher": "TomDobbelaere",
+    "engines": {
+        "vscode": "^1.22.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "flight",
+            "aliases": ["Flight", "flight"],
+            "extensions": [".fl"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "flight",
+            "scopeName": "main.fl",
+            "path": "./syntaxes/flight.tmLanguage.json"
+        }]
+    }
+}

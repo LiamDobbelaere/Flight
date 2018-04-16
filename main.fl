@@ -1,4 +1,23 @@
-func _fib(n, a, b) {
+impure func x() {
+
+}
+
+func y() {
+    
+}
+
+let x = 5;
+let mut x = 5;
+
+let toby = {
+    graantjes: 50,
+    gewicht: 20,
+    test: {
+        getal: 20
+    }
+};
+
+/*func _fib(n, a, b) {
     if (n == 0) {
         return b;
     } else {
@@ -29,9 +48,7 @@ let mut mutableObject = {
     hi: {
         boy: "kek"
     },
-    !world: {
-        !shoeSize: 5
-    },
+    !world: 8,
     kek: toby
 };
 
@@ -40,10 +57,26 @@ let mut mutableObject = {
 mutableObject.hi = 5;
 print(mutableObject.hi);
 
-mutableObject.world.shoeSize = 88;
+mutableObject.world = 88;
 print(mutableObject.world);
 
 print(immutableObject.kek(8));
 print(x);
 print(fib(1000));
 print(toby(8));
+*/
+
+
+
+let toby = {
+    graantjes: 50,
+    gewicht: 20,
+    test: {
+        getal: 20
+    }
+};
+
+toby.test.getal = 50;
+
+print(toby.graantjes);
+print(toby.gewicht);
