@@ -1,82 +1,10 @@
-impure func x() {
+let mut y = 2;
 
+impure func something(x) {
+    y = 6;
+
+    return x + 1;
 }
 
-func y() {
-    
-}
-
-let x = 5;
-let mut x = 5;
-
-let toby = {
-    graantjes: 50,
-    gewicht: 20,
-    test: {
-        getal: 20
-    }
-};
-
-/*func _fib(n, a, b) {
-    if (n == 0) {
-        return b;
-    } else {
-        return _fib(n - 1, a + b, a);
-    }
-}
-
-func fib(n) {
-    return _fib(n, 1, 0);
-}
-
-func toby(n) {
-    return n + 1;
-}
-
-let x = 5 + 8;
-let mut y = 8;
-
-let immutableObject = {
-    hi: {
-        boy: "kek"
-    },
-    world: "yo",
-    kek: toby
-};
-
-let mut mutableObject = {
-    hi: {
-        boy: "kek"
-    },
-    !world: 8,
-    kek: toby
-};
-
-//Some comment
-
-mutableObject.hi = 5;
-print(mutableObject.hi);
-
-mutableObject.world = 88;
-print(mutableObject.world);
-
-print(immutableObject.kek(8));
-print(x);
-print(fib(1000));
-print(toby(8));
-*/
-
-
-
-let toby = {
-    graantjes: 50,
-    gewicht: 20,
-    test: {
-        getal: 20
-    }
-};
-
-toby.test.getal = 50;
-
-print(toby.graantjes);
-print(toby.gewicht);
+something(5);
+print("hi");

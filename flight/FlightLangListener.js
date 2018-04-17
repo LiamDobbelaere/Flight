@@ -10,6 +10,9 @@ FlightLangListener = function(compact=false) {
   this.terminator = ';' + this.lineEnding;
   this.currentIndent = 0;
   this.space = compact ? '' : ' ';
+  this.global = {
+    scope: []
+  };
 
   return this;
 };
@@ -106,6 +109,13 @@ FlightListener.prototype.exitVariableStatement = function(ctx) {
 
 // Enter a parse tree produced by FlightParser#variableDeclaration.
 FlightListener.prototype.enterVariableDeclaration = function(ctx) {
+  let parentFunc = this.utils.findTypeInParents(ctx, FlightParser.FunctionDeclarationContext);
+  if (parentFunc) {
+    parentFunc.scope.push(ctx.Identifier().getText());
+  } else {
+    this.global.scope.push(ctx.Identifier().getText());
+  }
+
   this.res.push(ctx.Identifier() + this.space + ctx.Assign() + this.space);
 };
 
@@ -187,6 +197,9 @@ FlightListener.prototype.exitElseStatement = function(ctx) {
 
 // Enter a parse tree produced by FlightParser#functionDeclaration.
 FlightListener.prototype.enterFunctionDeclaration = function(ctx) {
+  ctx.scope = [];
+  ctx.impure = !!ctx.Impure();
+
   this.res.push('function ' + ctx.Identifier());
 };
 
@@ -313,11 +326,7 @@ FlightListener.prototype.exitParameterSeparator = function(ctx) {
 
 // Enter a parse tree produced by FlightParser#IdentifierExpression.
 FlightListener.prototype.enterIdentifierExpression = function(ctx) {
-  if (ctx.Identifier() == 'print') {
-    this.res.push('console.log');
-  } else {
-    this.res.push(ctx.Identifier());
-  }
+  
 };
 
 // Exit a parse tree produced by FlightParser#IdentifierExpression.
@@ -332,7 +341,7 @@ FlightListener.prototype.utils.findTypeInParents = function(ctx, type) {
     parent = parent.parentCtx;
   }
 
-  return parent;
+  return (parent instanceof type) ? parent : null;
 };
 
 // Enter a parse tree produced by FlightParser#objectLiteral.
@@ -389,7 +398,19 @@ FlightListener.prototype.enterPropertyName = function(ctx) {
 
 // Enter a parse tree produced by FlightParser#identifierName.
 FlightListener.prototype.enterIdentifierName = function(ctx) {
-  this.res.push(ctx.Identifier());
+  let parentFunc = this.utils.findTypeInParents(ctx, FlightParser.FunctionDeclarationContext);
+  
+  if (parentFunc) {
+    if (!parentFunc.impure && this.global.scope.indexOf(ctx.Identifier().getText()) !== -1 && parentFunc.scope.indexOf(ctx.Identifier().getText()) == -1){
+      throw new Error("Using global variable '"+ ctx.Identifier().getText() + "' in pure function at line " + ctx.start.line + ':' + ctx.start.column);
+    }
+  }
+
+  if (ctx.Identifier() == 'print') {
+    this.res.push('console.log');
+  } else {
+    this.res.push(ctx.Identifier());
+  }
 };
 
 // Exit a parse tree produced by FlightParser#propertyName.
@@ -420,6 +441,9 @@ FlightListener.prototype.exitFormalParameterList = function(ctx) {
 
 // Enter a parse tree produced by FlightParser#formalParameterArg.
 FlightListener.prototype.enterFormalParameterArg = function(ctx) {
+  let parentFunc = this.utils.findTypeInParents(ctx, FlightParser.FunctionDeclarationContext);
+  parentFunc.scope.push(ctx.Identifier().getText());
+
   this.res.push(ctx.Identifier());
 };
 

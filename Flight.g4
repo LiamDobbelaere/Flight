@@ -69,13 +69,13 @@ elseStatement
     ;
 
 functionDeclaration
-    : Impure? Function Identifier ParameterListOpen formalParameterList? ParameterListClose BlockOpen functionBody BlockClose
+    : Impure? Function Identifier ParameterListOpen formalParameterList ParameterListClose BlockOpen functionBody BlockClose
     ;
 
 singleExpression
     : literal                                                                # LiteralExpression
     | objectLiteral                                                          # ObjectLiteralExpression
-    | Identifier                                                             # IdentifierExpression
+    | identifierName                                                             # IdentifierExpression
     | singleExpression memberDot identifierName                                    # MemberDotExpression
     | singleExpression arguments                                             # ArgumentsExpression
     | singleExpression (add | sub) singleExpression                          # AdditiveExpression
@@ -129,7 +129,7 @@ parameterSeparator
     ;
 
 formalParameterList
-    : formalParameterArg (parameterSeparator formalParameterArg)*
+    : formalParameterArg? (parameterSeparator formalParameterArg)*
     ;
 
 formalParameterArg
