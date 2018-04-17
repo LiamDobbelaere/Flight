@@ -32,15 +32,6 @@ FlightListener.prototype.exitSource = function(ctx) {
   this.res = this.res.join('');
 };
 
-// Enter a parse tree produced by FlightParser#statement.
-FlightListener.prototype.enterStatement = function(ctx) {
-};
-
-// Exit a parse tree produced by FlightParser#statement.
-FlightListener.prototype.exitStatement = function(ctx) {
-};
-
-
 // Enter a parse tree produced by FlightParser#block.
 FlightListener.prototype.enterBlock = function(ctx) {
   this.res.push('{' + this.lineEnding);
@@ -52,24 +43,6 @@ FlightListener.prototype.exitBlock = function(ctx) {
   this.res.push('}' + this.lineEnding);
   this.currentIndent--;
 };
-
-// Enter a parse tree produced by FlightParser#statements.
-FlightListener.prototype.enterStatements = function(ctx) {
-};
-
-// Exit a parse tree produced by FlightParser#statements.
-FlightListener.prototype.exitStatements = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FlightParser#expressionStatement.
-FlightListener.prototype.enterExpressionStatement = function(ctx) {
-};
-
-// Exit a parse tree produced by FlightParser#expressionStatement.
-FlightListener.prototype.exitExpressionStatement = function(ctx) {
-};
-
 
 // Enter a parse tree produced by FlightParser#returnStatement.
 FlightListener.prototype.enterReturnStatement = function(ctx) {
@@ -119,41 +92,10 @@ FlightListener.prototype.enterVariableDeclaration = function(ctx) {
   this.res.push(ctx.Identifier() + this.space + ctx.Assign() + this.space);
 };
 
-// Exit a parse tree produced by FlightParser#variableDeclaration.
-FlightListener.prototype.exitVariableDeclaration = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FlightParser#varModifier.
-FlightListener.prototype.enterVarModifier = function(ctx) {
-
-};
-
-// Exit a parse tree produced by FlightParser#varModifier.
-FlightListener.prototype.exitVarModifier = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FlightParser#varMutability.
-FlightListener.prototype.enterVarMutability = function(ctx) {
-
-};
-
-// Exit a parse tree produced by FlightParser#varMutability.
-FlightListener.prototype.exitVarMutability = function(ctx) {
-};
-
-
 // Enter a parse tree produced by FlightParser#ifStatement.
 FlightListener.prototype.enterIfStatement = function(ctx) {
   this.res.push('if' + this.space);
 };
-
-// Exit a parse tree produced by FlightParser#ifStatement.
-FlightListener.prototype.exitIfStatement = function(ctx) {
-
-};
-
 
 // Enter a parse tree produced by FlightParser#freezeMarker.
 FlightListener.prototype.enterFreezeMarker = function(ctx) {
@@ -180,6 +122,11 @@ FlightListener.prototype.exitAssignmentExpression = function(ctx) {
   this.res.push(this.terminator);
 };
 
+// Exit a parse tree produced by FlightParser#AssignmentExpression.
+FlightListener.prototype.exitAssignmentOperatorExpression = function(ctx) {
+  this.res.push(this.terminator);
+};
+
 // Exit a parse tree produced by FlightParser#ifConditionList.
 FlightListener.prototype.exitIfConditionList = function(ctx) {
   this.res.push(')' + this.space);
@@ -190,11 +137,6 @@ FlightListener.prototype.enterElseStatement = function(ctx) {
   this.res.push(' else ');
 };
 
-// Exit a parse tree produced by FlightParser#elseStatement.
-FlightListener.prototype.exitElseStatement = function(ctx) {
-
-};
-
 // Enter a parse tree produced by FlightParser#functionDeclaration.
 FlightListener.prototype.enterFunctionDeclaration = function(ctx) {
   ctx.scope = [];
@@ -203,21 +145,32 @@ FlightListener.prototype.enterFunctionDeclaration = function(ctx) {
   this.res.push('function ' + ctx.Identifier());
 };
 
-// Exit a parse tree produced by FlightParser#functionDeclaration.
-FlightListener.prototype.exitFunctionDeclaration = function(ctx) {
+FlightListener.prototype.enterFunctionExpression = function(ctx) {
+  ctx.scope = [];
+  ctx.impure = false;
+
+  this.res.push('function ' + (ctx.Identifier() ? ctx.Identifier() : ''));
+};
+
+// Enter a parse tree produced by FlightParser#functionBody.
+FlightListener.prototype.enterFunctionBody = function(ctx) {
+  this.res.push(this.lineEnding + '{' + this.lineEnding);
+};
+
+// Exit a parse tree produced by FlightParser#functionBody.
+FlightListener.prototype.exitFunctionBody = function(ctx) {
+  this.res.push(this.lineEnding + '}' + this.lineEnding);
+};
+
+// Enter a parse tree produced by FlightParser#arrowFunctionParameters.
+FlightListener.prototype.enterArrowFunctionParameters = function(ctx) {
+  ctx.scope = [];
+  ctx.impure = false;
 };
 
 // Enter a parse tree produced by FlightParser#equal.
 FlightListener.prototype.enterEqual = function(ctx) {
   this.res.push(this.space + '==' + this.space);
-};
-
-// Exit a parse tree produced by FlightParser#equal.
-FlightListener.prototype.exitEqual = function(ctx) {
-};
-
-// Enter a parse tree produced by FlightParser#ArgumentsExpression.
-FlightListener.prototype.enterArgumentsExpression = function(ctx) {
 };
 
 // Exit a parse tree produced by FlightParser#ArgumentsExpression.
@@ -229,15 +182,9 @@ FlightListener.prototype.exitArgumentsExpression = function(ctx) {
     this.res.push(this.terminator);
 };
 
-
 // Enter a parse tree produced by FlightParser#less.
 FlightListener.prototype.enterLess = function(ctx) {
   this.res.push(this.space + '<' + this.space);
-};
-
-// Exit a parse tree produced by FlightParser#less.
-FlightListener.prototype.exitLess = function(ctx) {
-
 };
 
 
@@ -246,28 +193,15 @@ FlightListener.prototype.enterGreater = function(ctx) {
   this.res.push(this.space + '>' + this.space);
 };
 
-// Exit a parse tree produced by FlightParser#greater.
-FlightListener.prototype.exitGreater = function(ctx) {
-};
-
 
 // Enter a parse tree produced by FlightParser#lessOrEql.
 FlightListener.prototype.enterLessOrEql = function(ctx) {
   this.res.push(this.space+ '<=' + this.space);
 };
 
-// Exit a parse tree produced by FlightParser#lessOrEql.
-FlightListener.prototype.exitLessOrEql = function(ctx) {
-};
-
-
 // Enter a parse tree produced by FlightParser#greaterOrEql.
 FlightListener.prototype.enterGreaterOrEql = function(ctx) {
   this.res.push(this.space + '>=' + this.space);
-};
-
-// Exit a parse tree produced by FlightParser#greaterOrEql.
-FlightListener.prototype.exitGreaterOrEql = function(ctx) {
 };
 
 // Enter a parse tree produced by FlightParser#add.
@@ -275,62 +209,14 @@ FlightListener.prototype.enterAdd = function(ctx) {
   this.res.push(this.space + '+' + this.space);
 };
 
-// Exit a parse tree produced by FlightParser#add.
-FlightListener.prototype.exitAdd = function(ctx) {
-};
-
 // Enter a parse tree produced by FlightParser#sub.
 FlightListener.prototype.enterSub = function(ctx) {
   this.res.push(this.space + '-' + this.space);
 };
 
-// Exit a parse tree produced by FlightParser#sub.
-FlightListener.prototype.exitSub = function(ctx) {
-};
-
-// Enter a parse tree produced by FlightParser#RelationalExpression.
-FlightListener.prototype.enterRelationalExpression = function(ctx) {
-};
-
-// Exit a parse tree produced by FlightParser#RelationalExpression.
-FlightListener.prototype.exitRelationalExpression = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FlightParser#LiteralExpression.
-FlightListener.prototype.enterLiteralExpression = function(ctx) {
-};
-
-// Exit a parse tree produced by FlightParser#LiteralExpression.
-FlightListener.prototype.exitLiteralExpression = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FlightParser#EqualityExpression.
-FlightListener.prototype.enterEqualityExpression = function(ctx) {
-};
-
-// Exit a parse tree produced by FlightParser#EqualityExpression.
-FlightListener.prototype.exitEqualityExpression = function(ctx) {
-};
-
 // Enter a parse tree produced by FlightParser#parameterSeparator.
 FlightListener.prototype.enterParameterSeparator = function(ctx) {
   this.res.push(',' + this.space);
-};
-
-// Exit a parse tree produced by FlightParser#parameterSeparator.
-FlightListener.prototype.exitParameterSeparator = function(ctx) {
-
-};
-
-// Enter a parse tree produced by FlightParser#IdentifierExpression.
-FlightListener.prototype.enterIdentifierExpression = function(ctx) {
-  
-};
-
-// Exit a parse tree produced by FlightParser#IdentifierExpression.
-FlightListener.prototype.exitIdentifierExpression = function(ctx) {
 };
 
 FlightListener.prototype.utils = {};
@@ -364,26 +250,29 @@ FlightListener.prototype.exitObjectLiteral = function(ctx) {
 };
 
 
+// Enter a parse tree produced by FlightParser#objectLiteral.
+FlightListener.prototype.enterArrayLiteral = function(ctx) {
+  let vsCtx = this.utils.findTypeInParents(ctx, FlightParser.VariableStatementContext);
+  
+  if (!vsCtx.varMutability()) {
+    this.res.push('Object.freeze(');
+    ctx.mustFreeze = true;
+  }
+};
+
+// Exit a parse tree produced by FlightParser#objectLiteral.
+FlightListener.prototype.exitArrayLiteral = function(ctx) {
+  if (ctx.mustFreeze) this.res.push(')');
+};
+
 // Enter a parse tree produced by FlightParser#propertySeparator.
 FlightListener.prototype.enterPropertySeparator = function(ctx) {
   this.res.push(',' + this.lineEnding);
 };
 
-// Enter a parse tree produced by FlightParser#PropertyExpressionAssignment.
-FlightListener.prototype.enterPropertyExpressionAssignment = function(ctx) {
-};
-
-// Exit a parse tree produced by FlightParser#PropertyExpressionAssignment.
-FlightListener.prototype.exitPropertyExpressionAssignment = function(ctx) {
-};
-
 // Enter a parse tree produced by FlightParser#propertyAssignSymbol.
 FlightListener.prototype.enterPropertyAssignSymbol = function(ctx) {
   this.res.push(': ');
-};
-
-// Exit a parse tree produced by FlightParser#propertyAssignSymbol.
-FlightListener.prototype.exitPropertyAssignSymbol = function(ctx) {
 };
 
 // Enter a parse tree produced by FlightParser#memberDot.
@@ -413,10 +302,6 @@ FlightListener.prototype.enterIdentifierName = function(ctx) {
   }
 };
 
-// Exit a parse tree produced by FlightParser#propertyName.
-FlightListener.prototype.exitPropertyName = function(ctx) {
-};
-
 // Enter a parse tree produced by FlightParser#arguments.
 FlightListener.prototype.enterArguments = function(ctx) {
   this.res.push('(');
@@ -438,28 +323,12 @@ FlightListener.prototype.exitFormalParameterList = function(ctx) {
   this.res.push(')');
 };
 
-
 // Enter a parse tree produced by FlightParser#formalParameterArg.
 FlightListener.prototype.enterFormalParameterArg = function(ctx) {
-  let parentFunc = this.utils.findTypeInParents(ctx, FlightParser.FunctionDeclarationContext);
+  let parentFunc = this.utils.findTypeInParents(ctx, FlightParser.ArrowFunctionParametersContext) || this.utils.findTypeInParents(ctx, FlightParser.FunctionExpressionContext) || this.utils.findTypeInParents(ctx, FlightParser.FunctionDeclarationContext);
   parentFunc.scope.push(ctx.Identifier().getText());
 
   this.res.push(ctx.Identifier());
-};
-
-// Exit a parse tree produced by FlightParser#formalParameterArg.
-FlightListener.prototype.exitFormalParameterArg = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FlightParser#functionBody.
-FlightListener.prototype.enterFunctionBody = function(ctx) {
-  this.res.push(this.space + '{' + this.lineEnding);
-};
-
-// Exit a parse tree produced by FlightParser#functionBody.
-FlightListener.prototype.exitFunctionBody = function(ctx) {
-  this.res.push(this.lineEnding + '}' + this.lineEnding + this.lineEnding);
 };
 
 // Enter a parse tree produced by FlightParser#literal.
@@ -467,8 +336,89 @@ FlightListener.prototype.enterLiteral = function(ctx) {
   this.res.push(ctx.getText());
 };
 
-// Exit a parse tree produced by FlightParser#literal.
-FlightListener.prototype.exitLiteral = function(ctx) {
+// Enter a parse tree produced by FlightParser#openBlock.
+FlightListener.prototype.enterOpenBlock = function(ctx) {
+  this.res.push('{' + this.lineEnding);
+};
+
+// Enter a parse tree produced by FlightParser#closeBlock.
+FlightListener.prototype.enterCloseBlock = function(ctx) {
+  this.res.push(this.lineEnding + '}' + this.lineEnding);
+};
+
+FlightListener.prototype.enterMultiply = function(ctx) {
+  this.res.push(this.space + '*' + this.space);
+};
+
+FlightListener.prototype.enterDivide = function(ctx) {
+  this.res.push(this.space + '/' + this.space);
+};
+
+FlightListener.prototype.enterModulo = function(ctx) {
+  this.res.push(this.space + '%' + this.space);
+};
+
+FlightListener.prototype.enterLogicalAnd = function(ctx) {
+  this.res.push(this.space + '&&' + this.space);
+};
+
+FlightListener.prototype.enterLogicalOr = function(ctx) {
+  this.res.push(this.space + '||' + this.space);
+};
+
+FlightListener.prototype.enterNotEqual = function(ctx) {
+  this.res.push(this.space + '!=' + this.space);
+};
+
+FlightListener.prototype.enterEqualStrict = function(ctx) {
+  this.res.push(this.space + '===' + this.space);
+};
+
+FlightListener.prototype.enterNotEqualStrict = function(ctx) {
+  this.res.push(this.space + '!==' + this.space);
+};
+
+FlightListener.prototype.enterMultiplyAssign = function(ctx) {
+  this.res.push(this.space + '*=' + this.space);
+};
+
+FlightListener.prototype.enterDivideAssign = function(ctx) {
+  this.res.push(this.space + '/=' + this.space);
+};
+
+FlightListener.prototype.enterModuloAssign = function(ctx) {
+  this.res.push(this.space + '%=' + this.space);
+};
+
+FlightListener.prototype.enterAddAssign = function(ctx) {
+  this.res.push(this.space + '+=' + this.space);
+};
+
+FlightListener.prototype.enterSubAssign = function(ctx) {
+  this.res.push(this.space + '-=' + this.space);
+};
+
+// Enter a parse tree produced by FlightParser#elementListSeparator.
+FlightListener.prototype.enterElementListSeparator = function(ctx) {
+  this.res.push(',' + this.space);
+};
+
+
+
+
+// Enter a parse tree produced by FlightParser#arrayLiteralOpen.
+FlightListener.prototype.enterArrayLiteralOpen = function(ctx) {
+  this.res.push('[');
+};
+
+// Enter a parse tree produced by FlightParser#arrayLiteralClose.
+FlightListener.prototype.enterArrayLiteralClose = function(ctx) {
+  this.res.push(']');
+};
+
+// Enter a parse tree produced by FlightParser#arrowFunctionArrow.
+FlightListener.prototype.enterArrowFunctionArrow = function(ctx) {
+  this.res.push(this.space + '=>' + this.space);
 };
 
 module.exports = FlightLangListener;

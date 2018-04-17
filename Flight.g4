@@ -73,15 +73,109 @@ functionDeclaration
     ;
 
 singleExpression
-    : literal                                                                # LiteralExpression
-    | objectLiteral                                                          # ObjectLiteralExpression
-    | identifierName                                                             # IdentifierExpression
-    | singleExpression memberDot identifierName                                    # MemberDotExpression
-    | singleExpression arguments                                             # ArgumentsExpression
-    | singleExpression (add | sub) singleExpression                          # AdditiveExpression
-    | singleExpression (less | greater | lessOrEql | greaterOrEql) singleExpression            # RelationalExpression
-    | singleExpression (equal | '!=' | '===' | '!==') singleExpression        # EqualityExpression
-    | singleExpression assign singleExpression                                  # AssignmentExpression
+    : literal                                                                               # LiteralExpression
+    | arrayLiteral                                                                          # ArrayLiteralExpression
+    | objectLiteral                                                                         # ObjectLiteralExpression
+    | Function Identifier? parameterListOpen formalParameterList parameterListClose functionBody                # FunctionExpression
+    | singleExpression arrayLiteralOpen expressionSequence arrayLiteralClose                # MemberIndexExpression
+    | identifierName                                                                        # IdentifierExpression
+    | singleExpression memberDot identifierName                                             # MemberDotExpression
+    | singleExpression arguments                                                            # ArgumentsExpression
+    | singleExpression (add | sub) singleExpression                                         # AdditiveExpression
+    | singleExpression (less | greater | lessOrEql | greaterOrEql) singleExpression         # RelationalExpression
+    | singleExpression (equal | notEqual | equalStrict | notEqualStrict) singleExpression   # EqualityExpression
+    | singleExpression logicalAnd singleExpression                                          # LogicalAndExpression
+    | singleExpression logicalOr singleExpression                                           # LogicalOrExpression
+    | singleExpression assign singleExpression                                              # AssignmentExpression
+    | singleExpression (multiply | divide | modulo) singleExpression                        # MultiplicativeExpression
+    | singleExpression assignmentOperator singleExpression                                  # AssignmentOperatorExpression
+    | arrowFunctionParameters arrowFunctionArrow arrowFunctionBody                                        # ArrowFunctionExpression
+    ;
+
+arrowFunctionArrow
+    : ArrowFunctionArrow
+    ;
+
+arrowFunctionParameters
+    : Identifier
+    | parameterListOpen formalParameterList parameterListClose
+    ;
+
+parameterListOpen
+    : ParameterListOpen
+    ;
+
+parameterListClose
+    : ParameterListClose
+    ;
+
+arrowFunctionBody
+    : singleExpression
+    | functionBody
+    ;
+
+openBlock
+    : BlockOpen
+    ;
+
+closeBlock
+    : BlockClose
+    ;
+
+expressionSequence
+    : singleExpression (parameterSeparator singleExpression)*
+    ;
+
+arrayLiteral
+    : arrayLiteralOpen elementListSeparator* elementList? elementListSeparator* arrayLiteralClose
+    ;
+
+arrayLiteralOpen
+    : ArrayLiteralOpen
+    ;
+
+arrayLiteralClose
+    : ArrayLiteralClose
+    ;
+
+elementList
+    : singleExpression (elementListSeparator+ singleExpression)*
+    ;
+
+elementListSeparator
+    : ParameterSeparator
+    ;
+
+multiply
+    : Multiply
+    ;
+
+divide
+    : Divide
+    ;
+
+modulo
+    : Modulo
+    ;
+
+logicalAnd
+    : LogicalAnd
+    ;
+
+logicalOr
+    : LogicalOr
+    ;
+
+notEqual
+    : NotEqual
+    ;
+
+equalStrict
+    : EqualStrict
+    ;
+
+notEqualStrict
+    : NotEqualStrict
     ;
 
 assign
@@ -94,6 +188,40 @@ memberDot
 
 identifierName
     : Identifier
+    ;
+
+assignmentOperator
+    : multiplyAssign
+    | divideAssign
+    | moduloAssign
+    | addAssign
+    | subAssign
+    /*| '<<='
+    | '>>='
+    | '>>>='
+    | '&='
+    | '^='
+    | '|='*/
+    ;
+
+multiplyAssign 
+    : MultiplyAssign
+    ;
+
+divideAssign
+    : DivideAssign
+    ;
+
+moduloAssign
+    : ModuloAssign
+    ;
+
+addAssign
+    : AddAssign
+    ;
+
+subAssign
+    : SubAssign
     ;
 
 objectLiteral
@@ -152,6 +280,19 @@ sub: Sub;
 Add: '+';
 Sub: '-';
 Equal: '==';
+NotEqual: '!=';
+EqualStrict: '===';
+NotEqualStrict: '!==';
+LogicalAnd: '&&';
+LogicalOr: '||';
+Multiply: '*';
+Divide: '/';
+Modulo: '%';
+MultiplyAssign: '*=';
+DivideAssign: '/=';
+ModuloAssign: '%=';
+AddAssign: '+=';
+SubAssign: '-=';
 Mut: 'mut';
 Let: 'let';
 If: 'if';
@@ -163,12 +304,13 @@ LessOrEql: '<=';
 GreaterOrEql: '>=';
 Less: '<';
 Greater: '>';
-
+ArrowFunctionArrow: '=>';
 BlockOpen: '{';
 BlockClose: '}';
 ParameterListOpen: '(';
 ParameterListClose: ')';
-
+ArrayLiteralOpen: '[';
+ArrayLiteralClose: ']';
 FreezeMarker: '!';
 Assign: '=';
 MemberDot: '.';
