@@ -76,7 +76,7 @@ singleExpression
     : literal                                                                               # LiteralExpression
     | arrayLiteral                                                                          # ArrayLiteralExpression
     | objectLiteral                                                                         # ObjectLiteralExpression
-    | Function Identifier? parameterListOpen formalParameterList parameterListClose functionBody                # FunctionExpression
+    //| Function Identifier? parameterListOpen formalParameterList parameterListClose functionBody                # FunctionExpression
     | singleExpression arrayLiteralOpen expressionSequence arrayLiteralClose                # MemberIndexExpression
     | identifierName                                                                        # IdentifierExpression
     | singleExpression memberDot identifierName                                             # MemberDotExpression
@@ -110,8 +110,7 @@ parameterListClose
     ;
 
 arrowFunctionBody
-    : singleExpression
-    | functionBody
+    : BlockOpen functionBody BlockClose
     ;
 
 openBlock

@@ -1,0 +1,8 @@
+let mut y = 6;
+
+let x = () => {
+  y = 7;
+  return 5;
+};
+
+print(x());

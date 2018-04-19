@@ -1,0 +1,38 @@
+let a = 5;
+//a = 6; //Won't work because a is not mutable
+
+let b = {
+  hello: "world",
+  foo: {
+    bar: true
+  }
+};
+
+//b.foo.bar = false; //Won't work because b is not mutable
+
+let mut c = {
+  hello: "world",
+  foo: {
+    bar: true
+  }
+};
+
+c.foo.bar = false; //Works
+
+let mut d = 8;
+
+func add(x, y) {
+  return x + y;
+}
+
+func add(x, y) {
+  //d = 9; //Won't work because function is impure without impure keyword
+  return x + y;
+}
+
+impure func add(x, y) {
+  d = 9; //Works;
+  return x + y;
+}
+
+print(d);
