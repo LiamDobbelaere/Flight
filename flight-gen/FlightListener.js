@@ -254,6 +254,15 @@ FlightListener.prototype.exitArgumentsExpression = function(ctx) {
 };
 
 
+// Enter a parse tree produced by FlightParser#FunctionExpression.
+FlightListener.prototype.enterFunctionExpression = function(ctx) {
+};
+
+// Exit a parse tree produced by FlightParser#FunctionExpression.
+FlightListener.prototype.exitFunctionExpression = function(ctx) {
+};
+
+
 // Enter a parse tree produced by FlightParser#AssignmentExpression.
 FlightListener.prototype.enterAssignmentExpression = function(ctx) {
 };

@@ -78,7 +78,7 @@ singleExpression
     | objectLiteral                                                                         # ObjectLiteralExpression
     | arrayInitializer                                                                      # ArrayInitializerExpression
     | New singleExpression arguments?                                                       # NewExpression
-    //| Function Identifier? parameterListOpen formalParameterList parameterListClose functionBody                # FunctionExpression
+    | Function Identifier? parameterListOpen formalParameterList parameterListClose BlockOpen functionBody BlockClose # FunctionExpression
     | singleExpression arrayLiteralOpen expressionSequence arrayLiteralClose                # MemberIndexExpression
     | identifierName                                                                        # IdentifierExpression
     | singleExpression memberDot identifierName                                             # MemberDotExpression

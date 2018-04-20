@@ -1,10 +1,10 @@
 func Game() {
-  this.board = array 6, 7 default 0;
+  this.board = array 6, 7 default "empty";
 
   print(this.board);
 }
 
-Game.prototype.lowestFreeSlot = //Func! (x, y) => {
+Game.prototype.lowestFreeSlot = func (x, y) {
   print(this);
 
   if (this.board[x][y] !== "empty") {
