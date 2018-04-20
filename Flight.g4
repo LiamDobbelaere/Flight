@@ -76,6 +76,8 @@ singleExpression
     : literal                                                                               # LiteralExpression
     | arrayLiteral                                                                          # ArrayLiteralExpression
     | objectLiteral                                                                         # ObjectLiteralExpression
+    | arrayInitializer                                                                      # ArrayInitializerExpression
+    | New singleExpression arguments?                                                       # NewExpression
     //| Function Identifier? parameterListOpen formalParameterList parameterListClose functionBody                # FunctionExpression
     | singleExpression arrayLiteralOpen expressionSequence arrayLiteralClose                # MemberIndexExpression
     | identifierName                                                                        # IdentifierExpression
@@ -90,6 +92,18 @@ singleExpression
     | singleExpression (multiply | divide | modulo) singleExpression                        # MultiplicativeExpression
     | singleExpression assignmentOperator singleExpression                                  # AssignmentOperatorExpression
     | arrowFunctionParameters arrowFunctionArrow arrowFunctionBody                                        # ArrowFunctionExpression
+    ;
+
+arrayInitializer
+    : Array arrayInitializerArg (aiParameterSeparator arrayInitializerArg)* defaultArrayInitValue?
+    ;
+
+defaultArrayInitValue
+    : Default singleExpression
+    ;
+
+arrayInitializerArg
+    : singleExpression
     ;
 
 arrowFunctionArrow
@@ -120,6 +134,8 @@ openBlock
 closeBlock
     : BlockClose
     ;
+
+aiParameterSeparator: ParameterSeparator;
 
 expressionSequence
     : singleExpression (parameterSeparator singleExpression)*
@@ -299,6 +315,7 @@ Else: 'else';
 Function: 'func';
 Impure: 'impure';
 Return: 'return';
+Array: 'array';
 LessOrEql: '<=';
 GreaterOrEql: '>=';
 Less: '<';
@@ -313,7 +330,8 @@ ArrayLiteralClose: ']';
 FreezeMarker: '!';
 Assign: '=';
 MemberDot: '.';
-
+New: 'new';
+Default: 'default';
 Identifier
     : [a-zA-Z_]+
     ;

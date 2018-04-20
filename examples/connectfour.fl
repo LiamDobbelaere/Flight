@@ -1,0 +1,18 @@
+func Game() {
+  this.board = array 6, 7 default 0;
+
+  print(this.board);
+}
+
+Game.prototype.lowestFreeSlot = //Func! (x, y) => {
+  print(this);
+
+  if (this.board[x][y] !== "empty") {
+    return [x, y - 1];
+  } else {
+    return this.lowestFreeSlot(x, y + 1);
+  }
+};
+
+let x = new Game();
+print(x.lowestFreeSlot(0, 0));

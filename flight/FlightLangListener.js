@@ -234,12 +234,22 @@ FlightListener.prototype.utils.findTypeInParents = function(ctx, type) {
 FlightListener.prototype.enterObjectLiteral = function(ctx) {
   let vsCtx = this.utils.findTypeInParents(ctx, FlightParser.VariableStatementContext);
   
-  if (!vsCtx.varMutability()) {
+  if (vsCtx && !vsCtx.varMutability()) {
     this.res.push('Object.freeze(');
     ctx.mustFreeze = true;
   }
 
   this.res.push('{' + this.lineEnding);
+};
+
+// Enter a parse tree produced by FlightParser#NewExpression.
+FlightListener.prototype.enterNewExpression = function(ctx) {
+  this.res.push('new ');
+};
+
+// Exit a parse tree produced by FlightParser#NewExpression.
+FlightListener.prototype.exitNewExpression = function(ctx) {
+  //this.res.push(this.terminator);
 };
 
 // Exit a parse tree produced by FlightParser#objectLiteral.
@@ -254,7 +264,7 @@ FlightListener.prototype.exitObjectLiteral = function(ctx) {
 FlightListener.prototype.enterArrayLiteral = function(ctx) {
   let vsCtx = this.utils.findTypeInParents(ctx, FlightParser.VariableStatementContext);
   
-  if (!vsCtx.varMutability()) {
+  if (vsCtx && !vsCtx.varMutability()) {
     this.res.push('Object.freeze(');
     ctx.mustFreeze = true;
   }
@@ -403,8 +413,54 @@ FlightListener.prototype.enterElementListSeparator = function(ctx) {
   this.res.push(',' + this.space);
 };
 
+// Enter a parse tree produced by FlightParser#arrayInitializer.
+FlightListener.prototype.enterArrayInitializer = function(ctx) {
+  ctx.dimensions = ctx.children.filter((t) => {
+    return t instanceof FlightParser.ArrayInitializerArgContext;
+  }).length - 1;
+  ctx.argsparsed = 0;
+};
+
+// Exit a parse tree produced by FlightParser#arrayInitializer.
+FlightListener.prototype.exitArrayInitializer = function(ctx) {
+  if (!ctx.defaultArrayInitValue()) {
+    this.res.push('"undefined"');
+
+    for (let i = 0; i < ctx.dimensions + 1; i++) {
+      this.res.push(';})');
+    }
+
+    this.res.push(this.terminator);
+  }
+
+};
 
 
+// Exit a parse tree produced by FlightParser#defaultArrayInitValue.
+FlightListener.prototype.exitDefaultArrayInitValue = function(ctx) {
+  let parent = this.utils.findTypeInParents(ctx, FlightParser.ArrayInitializerContext);
+
+  for (let i = 0; i < parent.dimensions + 1; i++) {
+    this.res.push(';})');
+  }
+
+  this.res.push(this.terminator);
+};
+
+
+// Enter a parse tree produced by FlightParser#arrayInitializerArg.
+FlightListener.prototype.enterArrayInitializerArg = function(ctx) {
+  let parent = this.utils.findTypeInParents(ctx, FlightParser.ArrayInitializerContext);
+
+  this.res.push('Array(');
+
+  parent.argsparsed++;
+};
+
+// Exit a parse tree produced by FlightParser#arrayInitializerArg.
+FlightListener.prototype.exitArrayInitializerArg = function(ctx) {
+  this.res.push(').fill().map(a => {return ');
+};
 
 // Enter a parse tree produced by FlightParser#arrayLiteralOpen.
 FlightListener.prototype.enterArrayLiteralOpen = function(ctx) {
