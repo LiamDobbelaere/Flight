@@ -1,18 +1,32 @@
 func Game() {
   this.board = array 6, 7 default "empty";
-
-  print(this.board);
 }
 
-Game.prototype.lowestFreeSlot = func (x, y) {
-  print(this);
-
-  if (this.board[x][y] !== "empty") {
+Game.prototype.lowestFreeSlot = func (y) {
+  /*if (this.board[x][y] !== "empty") {
     return [x, y - 1];
   } else {
     return this.lowestFreeSlot(x, y + 1);
-  }
+  }*/
+
+  //return [y, this.board[y].lastIndexOf("empty")];
+  /*let mut v = 0;
+
+  this.board.find((x) => {
+    if (x[0] === "empty") {
+      return v;
+    }
+
+    v += 1;
+  });
+
+  return v;*/
 };
 
 let x = new Game();
-print(x.lowestFreeSlot(0, 0));
+
+let a = x.lowestFreeSlot(0, 0)
+//x.board[a[0]][a[1]] = "ass";
+console.log(a);
+
+console.log(x.board);
