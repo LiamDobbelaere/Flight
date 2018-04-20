@@ -45,7 +45,7 @@ variableStatement
     ;
 
 variableDeclaration
-    : Identifier Assign singleExpression
+    : Identifier (Assign singleExpression)?
     ;
 
 varModifier

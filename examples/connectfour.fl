@@ -25,7 +25,7 @@ Game.prototype.lowestFreeSlot = func (y) {
 
 let x = new Game();
 
-let a = x.lowestFreeSlot(0, 0)
+let a = x.lowestFreeSlot(0, 0);
 //x.board[a[0]][a[1]] = "ass";
 console.log(a);
 

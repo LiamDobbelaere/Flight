@@ -90,7 +90,7 @@ FlightListener.prototype.enterVariableDeclaration = function(ctx) {
     this.global.scope.push(ctx.Identifier().getText());
   }
 
-  this.res.push(ctx.Identifier() + this.space + ctx.Assign() + this.space);
+  this.res.push(ctx.Identifier() + (ctx.Assign() ? this.space + ctx.Assign() + this.space : ''));
 };
 
 // Enter a parse tree produced by FlightParser#ifStatement.
