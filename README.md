@@ -2,6 +2,16 @@
   <img width="256" height="256" src="https://raw.githubusercontent.com/TomDobbelaere/Flight/master/misc/logo.png">
 </p>
 
+A language that transpiles to JavaScript, mostly made for educational purposes.
+
+How to run:
+- Make sure you have node and npm installed, nodemon is optional but useful
+- Clone the repository
+- `npm install` inside the directory
+- `npm install -g nodemon` to install nodemon
+- `nodemon index` to run the file watcher, changes to \*.fl files inside the examples directory will transpile on save
+- `nodemon .\examples\yourscript.fl.js` to run the transpiled javascript of your Flight code
+
 # If you know JavaScript, you know Flight (basically)
 ## 'State' is a nice guy, but don't let him dominate your code
 Flight believes good code can be partially enforced by the programming language.  
