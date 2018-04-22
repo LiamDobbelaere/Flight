@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4543f11-6a92-4ed9-98d7-463f3798261c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Flight.g4" afterPath="$PROJECT_DIR$/Flight.g4" />
-      <change beforePath="$PROJECT_DIR$/examples/connectfour.fl" afterPath="$PROJECT_DIR$/examples/connectfour.fl" />
-      <change beforePath="$PROJECT_DIR$/flight-gen/Flight.interp" afterPath="$PROJECT_DIR$/flight-gen/Flight.interp" />
-      <change beforePath="$PROJECT_DIR$/flight-gen/FlightParser.js" afterPath="$PROJECT_DIR$/flight-gen/FlightParser.js" />
-      <change beforePath="$PROJECT_DIR$/flight/FlightLangListener.js" afterPath="$PROJECT_DIR$/flight/FlightLangListener.js" />
-    </list>
+    <list default="true" id="b4543f11-6a92-4ed9-98d7-463f3798261c" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +14,8 @@
       <file leaf-file-name="Flight.g4" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Flight.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="2" column="1" lean-forward="false" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+            <state relative-caret-position="308">
+              <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -285,12 +278,12 @@
       <workItem from="1524136039756" duration="1496000" />
       <workItem from="1524158045897" duration="780000" />
       <workItem from="1524238780317" duration="1515000" />
-      <workItem from="1524253052945" duration="188000" />
+      <workItem from="1524253052945" duration="226000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12712000" />
+    <option name="totallyTimeSpent" value="12750000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="0" width="1938" height="1048" extended-state="0" />
@@ -310,7 +303,7 @@
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2567132" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="ANTLR Preview" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36602053" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36602053" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -666,8 +659,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Flight.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="2" column="1" lean-forward="false" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        <state relative-caret-position="308">
+          <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
           <folding />
         </state>
       </provider>
